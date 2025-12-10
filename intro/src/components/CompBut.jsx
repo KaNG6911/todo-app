@@ -1,10 +1,7 @@
-import { useState } from "react";
-
-export const CompBut = () => {
-  const [active, setActive] = useState(false);
+export const CompBut = ({ active, setActive }) => {
   return (
     <button
-      onClick={() => setActive(!active)}
+      onClick={setActive}
       className={`flex w-25 h-11 rounded-[8] justify-center items-center ${
         active ? "bg-blue-500 text-white " : "bg-gray-200"
       }`}
