@@ -1,20 +1,18 @@
-
-const All = ({ filter, setFilter }) => {
+const Completed = ({ filter, setFilter }) => {
   const curryFilter = (val) => () => setFilter(val);
 
   return (
     <button
-      onClick={curryFilter("all")}
+      onClick={curryFilter("completed")}
       className={
-        filter === "all"
+        filter === "completed"
           ? "px-4 py-2 rounded bg-blue-500 text-white"
           : "px-4 py-2 rounded bg-gray-200"
       }
     >
-      All
+      Completed
     </button>
   );
 };
 
-export default All;
-
+export default Completed;
