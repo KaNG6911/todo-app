@@ -1,61 +1,85 @@
 import { useState } from "react";
+import CompBut from "./CompBut";
+import Under from "./Under";
 
-export const Body = () => {
-  const [todos, setTodos] = useState([]);
+const Body = () => {
+  const [tasks, setTasks] = useState([]);
   const [input, setInput] = useState("");
+  const [filter, setFilter] = useState("all"); // all | active | completed
 
-  const addTodo = () => {
-    if (input.trim()) {
-      setTodos([...todos, { id: Date.now(), text: input, completed: false }]);
-      setInput("");
-    }
+  const addTask = () => {
+    if (!input.trim()) return;
+    setTasks([...tasks, { id: Date.now(), text: input, completed: false }]);
+    setInput("");
   };
 
+  const deleteTask = (id) => {
+    setTasks(tasks.filter((t) => t.id !== id));
+  };
+
+  const toggleTask = (id) => {
+    setTasks(
+      tasks.map((t) => (t.id === id ? { ...t, completed: !t.completed } : t))
+    );
+  };
+
+  const filteredTasks =
+    filter === "all"
+      ? tasks
+      : filter === "active"
+      ? tasks.filter((t) => !t.completed)
+      : tasks.filter((t) => t.completed);
+
   return (
-    <div>
-      <div className="flex gap-4">
+    <div className="w-100 flex flex-col gap-4">
+      {/* Input + Add */}
+      <div className="flex gap-2">
         <input
+          className="flex-1 border p-2 rounded"
+          placeholder="Add task..."
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          className="w-90 h-14 pl-4 border-gray-400 border-2 rounded-[8]"
-          type="text"
-          placeholder="Add a new task..."
         />
+
         <button
-          onClick={addTodo}
-          className="bg-blue-500 w-18 h-14 rounded-[8] text-white font-bold"
+          onClick={addTask}
+          className="bg-blue-500 text-white px-4 rounded"
         >
           Add
         </button>
       </div>
-      <ul>
-        {todos.map((todo) => {
-          <li
-            key={todo.id}
-            className="flex w-80 h-20 items-center bg-slate-100 border border-gray-200 rounded-[8]"
+
+      <CompBut filter={filter} setFilter={setFilter} />
+
+      <div className="flex flex-col gap-2">
+        {filteredTasks.map((t) => (
+          <div
+            key={t.id}
+            className="flex items-center justify-between p-2 border rounded"
           >
-            <input
-              type="checkbox"
-              checked={todo.completed}
-              onChange={() => {
-                setTodos(
-                  todo.map((t) => {
-                    t.id === todo.id ? { ...t, completed: !t.completed } : t;
-                  })
-                );
-              }}
-              className=" mr-2 h-5 w-5 text-blue-600"
-            />
-            <span
-              className={`grow ${
-                todo.completed ? "line-through text-gray-500" : "text-gray-800"
-              }`}
+            <div className="flex items-center gap-3">
+              <input
+                type="checkbox"
+                checked={t.completed}
+                onChange={() => toggleTask(t.id)}
+              />
+              <span className={t.completed ? "line-through text-gray-500" : ""}>
+                {t.text}
+              </span>
+            </div>
+            <button
+              onClick={() => deleteTask(t.id)}
+              className="text-red-500 font-bold"
             >
-              {todo.text}
-            </span>
-          </li>;
-        })}
-      </ul>
+              X
+            </button>
+          </div>
+        ))}
+      </div>
+
+      <Under tasks={tasks} />
     </div>
   );
 };
+
+export default Body;

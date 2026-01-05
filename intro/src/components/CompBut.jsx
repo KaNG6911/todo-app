@@ -1,12 +1,17 @@
-export const CompBut = ({ active, setActive }) => {
+
+import All from "./All";
+import ActiveBut from "./ActiveBut";
+import Completed from "./Completed";
+
+const CompBut = ({ filter, setFilter }) => {
   return (
-    <button
-      onClick={setActive}
-      className={`flex w-25 h-11 rounded-[8] justify-center items-center ${
-        active ? "bg-blue-500 text-white " : "bg-gray-200"
-      }`}
-    >
-      Complete
-    </button>
+
+    <div className="flex gap-3 justify-center">
+      <All filter={filter} setFilter={setFilter} />
+      <ActiveBut filter={filter} setFilter={setFilter} />
+      <Completed filter={filter} setFilter={setFilter} />
+    </div>
   );
 };
+
+export default CompBut;
