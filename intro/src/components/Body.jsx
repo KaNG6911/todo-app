@@ -5,7 +5,7 @@ import Under from "./Under";
 const Body = () => {
   const [tasks, setTasks] = useState([]);
   const [input, setInput] = useState("");
-  const [filter, setFilter] = useState("all"); // all | active | completed
+  const [filter, setFilter] = useState("all");
 
   const addTask = () => {
     if (!input.trim()) return;
@@ -37,13 +37,17 @@ const Body = () => {
 
   return (
     <div className="w-90 flex flex-col gap-4">
-      {/* Input + Add */}
       <div className="flex gap-2">
         <input
           className="flex-1 border-gray-300 border p-2 rounded outline-none text-sm"
           placeholder="Add a new task..."
           value={input}
           onChange={(e) => setInput(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              addTask();
+            }
+          }}
         />
 
         <button
