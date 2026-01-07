@@ -14,7 +14,12 @@ const Body = () => {
   };
 
   const deleteTask = (id) => {
-    setTasks(tasks.filter((t) => t.id !== id));
+    const confirm = window.confirm(
+      "Are you sure you want to delete this task?"
+    );
+    if (confirm) {
+      setTasks(tasks.filter((t) => t.id !== id));
+    }
   };
 
   const toggleTask = (id) => {
@@ -31,12 +36,12 @@ const Body = () => {
       : tasks.filter((t) => t.completed);
 
   return (
-    <div className="w-100 flex flex-col gap-4">
+    <div className="w-90 flex flex-col gap-4">
       {/* Input + Add */}
       <div className="flex gap-2">
         <input
-          className="flex-1 border p-2 rounded"
-          placeholder="Add task..."
+          className="flex-1 border-gray-300 border p-2 rounded outline-none text-sm"
+          placeholder="Add a new task..."
           value={input}
           onChange={(e) => setInput(e.target.value)}
         />
@@ -51,33 +56,34 @@ const Body = () => {
 
       <CompBut filter={filter} setFilter={setFilter} />
 
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-4">
         {filteredTasks.map((t) => (
           <div
             key={t.id}
-            className="flex items-center justify-between p-2 border rounded"
+            className="flex items-center justify-between p-4 bg-gray-50 rounded"
           >
             <div className="flex items-center gap-3">
               <input
                 type="checkbox"
                 checked={t.completed}
                 onChange={() => toggleTask(t.id)}
+                className="w-5 h-5"
               />
-              <span className={t.completed ? "line-through text-gray-500" : ""}>
+              <span className={t.completed ? "line-through " : ""}>
                 {t.text}
               </span>
             </div>
             <button
               onClick={() => deleteTask(t.id)}
-              className="text-red-500 font-bold"
+              className="text-red-500 bg-red-50 pl-2 pr-2 p-1 rounded-sm text-sm"
             >
-              X
+              Delete
             </button>
           </div>
         ))}
       </div>
 
-      <Under tasks={tasks} />
+      <Under tasks={tasks} setTasks={setTasks} />
     </div>
   );
 };

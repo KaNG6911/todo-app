@@ -6,7 +6,7 @@ import Completed from "./Completed";
 const CompBut = ({ filter, setFilter }) => {
   return (
 
-    <div className="flex gap-3 justify-center">
+    <div className="flex gap-3 ">
       <All filter={filter} setFilter={setFilter} />
       <ActiveBut filter={filter} setFilter={setFilter} />
       <Completed filter={filter} setFilter={setFilter} />

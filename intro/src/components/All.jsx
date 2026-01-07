@@ -8,8 +8,8 @@ const All = ({ filter, setFilter }) => {
       onClick={curryFilter("all")}
       className={
         filter === "all"
-          ? "px-4 py-2 rounded bg-blue-500 text-white"
-          : "px-4 py-2 rounded bg-gray-200"
+          ? "px-2.5 py-1.5 rounded bg-blue-500 text-white text-[12px]"
+          : "px-2.5 py-1.5 rounded bg-gray-200 text-[12px]  text-gray-600"
       }
     >
       All
