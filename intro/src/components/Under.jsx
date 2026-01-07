@@ -1,5 +1,7 @@
 const Under = ({ tasks, setTasks }) => {
   const completed = tasks.filter((t) => t.completed).length;
+  const hasCompleted = tasks.some((t) => t.completed);
+
   if (tasks.length === 0)
     return (
       <div className="text-center text-gray-400 text-[17px]">
@@ -23,6 +25,7 @@ const Under = ({ tasks, setTasks }) => {
               setTasks(tasks.filter((t) => !t.completed));
             }
           }}
+          disabled={!hasCompleted}
           className="text-red-500 text-sm font-medium"
         >
           Clear Completed
